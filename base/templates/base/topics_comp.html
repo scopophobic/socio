@@ -1,0 +1,57 @@
+    <!-- Topics Start -->
+    <div class="topics">
+      <div class="topics__header">
+        <h2>Browse Topics</h2>
+      </div>
+      <ul class="topics__list">
+        <li>
+          <a href="{% url 'HOME' %}">All <span>{{topics.count}}</span></a>
+        </li>
+
+        {% for topic in topics %}
+        <li>
+          <a href="{% url 'HOME' %}?q={{topic.name}}">{{topic.name}} <span>{{topic.room_set.all.count}}</span> </a>
+        </li>
+        {% endfor %}
+        <!-- <li>
+              <a href="/">Python <span>232</span></a>
+            </li>
+            <li>
+              <a href="/">JavaScript <span>122</span></a>
+            </li>
+            <li>
+              <a href="/">React <span>57</span></a>
+            </li>
+            <li>
+              <a href="/">Database <span>90</span></a>
+            </li> -->
+      </ul>
+      <a class="btn btn--link" href="topics.html">
+        More
+        <svg
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          width="32"
+          height="32"
+          viewBox="0 0 32 32"
+        >
+          <title>chevron-down</title>
+          <path d="M16 21l-13-13h-3l16 16 16-16h-3l-13 13z"></path>
+        </svg>
+      </a>
+    </div>
+
+
+
+    <!-- 
+old topics 
+<h3>topic browser</h3>
+<hr>
+<div>
+  <a href="{% url 'HOME' %}">All <span>{{topic.count}}</span></a>
+</div>
+{% for topic in topics %}
+  <div>
+    <a href="{% url 'HOME' %}?q={{topic.name}}">{{topic.name}} <span>{{topic.room_set.all.count}}</span> </a>
+  </div>
+{% endfor %} -->

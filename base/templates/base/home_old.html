@@ -1,0 +1,20 @@
+{% extends 'main.html' %} {% block content %}
+
+<!-- <h1>HOME TEMP</h1> -->
+
+<style>
+  .home-container {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+  }
+</style>
+
+<div class="home-container">
+  <div>{% include 'base/topics_comp.html' %}</div>
+
+  <div>{% include 'base/feed_comp.html' %}</div>
+
+  <div>{% include 'base/activity_comp.html' %}</div>
+
+  {% endblock %}
+</div>
