@@ -1,9 +1,9 @@
-
+{% load static %}
 <header class="header header--loggedIn">
 
     <div class="container">
       <a href="{% url 'HOME' %}" class="header__logo">
-        <img src="assets/logo.svg" />
+        <!-- <img src="assets/logo.svg" /> -->
         <h1>Socio</h1>
       </a>
       <form class="header__search" method="GET" action="{% url 'HOME' %}">
@@ -23,9 +23,9 @@
         <!-- Logged In -->
         {% if request.user.is_authenticated %}
         <div class="header__user">
-          <a href="profile.html">
+          <a href="{% url 'user-profile' request.user.id %}">
             <div class="avatar avatar--medium active">
-              <img src="https://randomuser.me/api/portraits/men/37.jpg" />
+              <img src="{% static 'images/pro.jpg' %}" />
             </div>
             <p>{{request.user.username}}<span>@{{request.user.username}}</span></p>
           </a>
