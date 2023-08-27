@@ -20,5 +20,9 @@ urlpatterns=[
     path('delete-room/<str:pk>',views.deleteRoom,name='delete-room'),
     # path('topic/<str')
 
+
     path('delete-message/<str:pk>',views.deleteMessage,name='delete-message'),
+
+
+    path('update-user/',views.updateUser,name='update-user'),
 ]
