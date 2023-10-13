@@ -4,10 +4,10 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm
+# from django.contrib.auth.forms import UserCreationForm
 from django.db.models import Q
-from .models import Room, Topic, Message
-from .forms import RoomForm,Userform
+from .models import Room, Topic, Message, User
+from .forms import RoomForm,Userform, MyUserCreationForm
 # Create your views here.
 
 
@@ -47,11 +47,11 @@ def logoutPage(request):
 
 def registerPage(request):
     page="register"
-    form=UserCreationForm()
+    form=MyUserCreationForm()
     context={'page':page, 'form':form}
 
     if request.method=='POST':
-        form=UserCreationForm(request.POST)
+        form=MyUserCreationForm(request.POST)
         if form.is_valid():
             user=form.save(commit=False) 
             user.username=user.username.lower()
@@ -69,9 +69,9 @@ def home (request):
         Q(name__icontains=q) |
         Q(description__icontains=q)
         )
-    topics=Topic.objects.all()
+    topics=Topic.objects.all()[0:6]
     room_count=rooms.count()
-    room_messages=Message.objects.filter(Q(room__topic__name__icontains=q))
+    room_messages=Message.objects.filter(Q(room__topic__name__icontains=q))[0:5]
     context= {'rooms' : rooms , 'topics':topics, 'room_count': room_count,'room_messages':room_messages}
     return render(request,'base/home.html',context )
 
@@ -187,9 +187,26 @@ def updateUser(request):
     user=request.user
     form=Userform(instance=user)
     if request.method=='POST':
-        form=Userform(request.POST,instance=user)
+        form=Userform(request.POST,request.FILES, instance=user)
         if form.is_valid:
             form.save()
             return redirect('user-profile',user.id )
 
     return render(request,'base/update-user.html',{'form':form})
+
+
+
+
+# mobile set
+
+def topicPage(request):
+    q=request.GET.get('q') if request.GET.get('q') != None else ''
+    
+    topics=Topic.objects.filter(name__icontains=q)
+    return render(request, 'base/topics.html',{'topics':topics})
+
+
+
+def activityPage(request):
+    room_messages=Message.objects.all()
+    return render(request, 'base/activity.html',{'room_messages':room_messages})
